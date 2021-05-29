@@ -4,7 +4,6 @@ sklearn-crfsuite==0.3.6
 smmap==4.0.0
 streamlit==0.82.0
 tabulate==0.8.9
-tensorflow==2.3.0
 termcolor==1.1.0
 terminado==0.10.0
 testpath==0.5.0
