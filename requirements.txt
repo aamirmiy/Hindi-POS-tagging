@@ -4,7 +4,6 @@ sklearn-crfsuite==0.3.6
 smmap==4.0.0
 streamlit==0.82.0
 tabulate==0.8.9
-tensorboard-plugin-wit==1.6.0
 tensorflow==2.3.0
 termcolor==1.1.0
 terminado==0.10.0
