@@ -4,6 +4,7 @@ Created on Thu May 20 22:09:15 2021
 
 @author: aamir
 """
+# Importing required libraries
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -21,6 +22,7 @@ from decimal import *
 import collections
 from nltk import word_tokenize
 
+#Importing the necessary text files and pickle files which contain the saved models
 lstm=tf.keras.models.load_model('lstm.h5')
 infile = open('crfhindi_1.sav','rb')
 model = pickle.load(infile)
@@ -31,13 +33,14 @@ with open("test.txt", "rb") as fp:
 with open("testy.txt", "rb") as fp1:
     ytrain = pickle.load(fp1)
 
+ #Creating a widget for taking user's input
 user_input = st.text_input("Enter hindi sentence", "")
-models=['CRF','HMM','LSTM']
-make_choice=st.selectbox('Select model:', models)
+models=['CRF','HMM','LSTM'] #These are the three models that will be used for tagging
+make_choice=st.selectbox('Select model:', models) #User can select anyone using a drop down menu
 
-if(make_choice=='CRF'):
+if(make_choice=='CRF'): #Depending on the model chosen , functions associated with that model will be executed
     @st.cache(suppress_st_warning=True)
-    def extract_features(sentence, index):
+    def extract_features(sentence, index): #This function is used to extract a set of features from a sentence
         return {
             'word': sentence[index],
             'is_first': index == 0,
@@ -55,9 +58,8 @@ if(make_choice=='CRF'):
             'has_hyphen': '-' in sentence[index],
             'is_numeric': sentence[index].isdigit()
         }
-    if st.button('Predict'):
+    if st.button('Predict'): # If predict button is pressed then tagging will be performed on the user sentence
         list1 = []
-        # list1.append(user_input.split())
         list1.append(word_tokenize(user_input))
         xtesting = []
         for index in range(len(list1)):
@@ -68,11 +70,10 @@ if(make_choice=='CRF'):
         pred = model.predict(xtesting)
         st.write(str(pred[0]))
 
-if(make_choice=='HMM'):
+if(make_choice=='HMM'): #Same procedure is repeated for HMM
     tag_list = set()
     tag_count = {}
     word_set = set()
-
 
     @st.cache(suppress_st_warning=True)
     def transition_count(X, y):
