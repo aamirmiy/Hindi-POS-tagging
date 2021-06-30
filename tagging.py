@@ -35,7 +35,7 @@ with open("testy.txt", "rb") as fp1:
 
  #Creating a widget for taking user's input
 user_input = st.text_input("Enter hindi sentence", "")
-models=['CRF','HMM','LSTM'] #These are the three models that will be used for tagging
+models=['CRF','HMM','ANN'] #These are the three models that will be used for tagging
 make_choice=st.selectbox('Select model:', models) #User can select anyone using a drop down menu
 
 if(make_choice=='CRF'): #Depending on the model chosen , functions associated with that model will be executed
@@ -68,9 +68,9 @@ if(make_choice=='CRF'): #Depending on the model chosen , functions associated wi
                 arrange.append(extract_features(list1[index], i))
             xtesting.append(arrange)
         pred = model.predict(xtesting)
-        st.write(str(pred[0]))
+        st.write(str(pred[0])) #This the equivalent print function.
 
-if(make_choice=='HMM'): #Same procedure is repeated for HMM
+if(make_choice=='HMM'): #This is the Hidden Markov Model.
     tag_list = set()
     tag_count = {}
     word_set = set()
@@ -251,9 +251,9 @@ if(make_choice=='HMM'): #Same procedure is repeated for HMM
                 st.write(word[j] + "/" + tag[j] + " ")
 
 
-if(make_choice=='LSTM'):
+if(make_choice=='ANN'): #This is the artificial Neural Network Model
     with open('fasttext.pkl', 'rb') as f:
-        embeddings_index = pickle.load(f)
+        embeddings_index = pickle.load(f) #loading word embeddings
     word = embeddings_index.keys()
     word = list(word)
     word2id = {k: word.index(k) for k in word}
@@ -265,7 +265,7 @@ if(make_choice=='LSTM'):
         embedding_matrix[i]=embedding_vector
 
     @st.cache(suppress_st_warning=True)
-    def add_new_word(new_word,new_vector,new_index,embedding_matrix,word2id):
+    def add_new_word(new_word,new_vector,new_index,embedding_matrix,word2id): #Function for handling words that are not present in the word embeddings.If such words are encoundtered then they are assigned the unknown token.
       embedding_matrix = np.insert(embedding_matrix, [new_index],[new_vector],axis=0)
       word2id = {word:(index+1) if index>=new_index else index for word,index in word2id.items()}
       word2id[new_word] = new_index
