@@ -5,3 +5,7 @@
 3. crfhindi_1.sav is the saved CRF model.
 4. **fasttext.pkl** is the pickle file containing pre-trained Hindi word embeddings.
 5. **procfile**, **requirements.txt** and **setup.sh** are files concerned with the deployment of the streamlit app.
+6. The  **ipynb** files contain code for the following models:
+      1. Conditional Random Fields
+      2. Hidden Markov Model
+      3. Artificial Neural Network.
